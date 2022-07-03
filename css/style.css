@@ -11,7 +11,7 @@
   --filter-start-node: drop-shadow(1px 1px 5px rgba(255, 13, 223, 0.35));
   --filter-target-node: drop-shadow(1px 1px 5px rgba(118, 98, 230, 0.411));
   --start-empty-svg: url(https://raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-start.svg);
-  --target-empty-svg: url(https: //raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-target.svg);
+  --target-empty-svg: url(https://raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-target.svg);
 
   /* sidebar theme variables */
   --bc-sidebar: #080024;
@@ -186,7 +186,7 @@
   --filter-start-node: none;
   --filter-target-node: none;
   --start-empty-svg: url(https://raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-start.svg);
-  --target-empty-svg: url(https: //raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-target.svg);
+  --target-empty-svg: url(https://raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-target.svg);
     
   /* sidebar theme variables */
   --bc-sidebar: linear-gradient(180deg, rgb(36, 36,36) 0%, rgb(14, 14, 14) 100%);
