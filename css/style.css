@@ -185,7 +185,7 @@
   --fill-target-node: #eee;
   --filter-start-node: none;
   --filter-target-node: none;
-  --start-empty-svg: url(./images/empty-node-images/dark-start.svg);
+  --start-empty-svg: url(https://raw.githubusercontent.com/ashleyjmaximilien/PathfindingVisualizer/master/images/empty-node-images/dark-start.svg);
   --target-empty-svg: url(./images/empty-node-images/dark-target.svg);
     
   /* sidebar theme variables */
