@@ -185,8 +185,8 @@
   --fill-target-node: #eee;
   --filter-start-node: none;
   --filter-target-node: none;
-  --start-empty-svg: url(/images/empty-node-images/dark-start.svg);
-  --target-empty-svg: url(/images/empty-node-images/dark-target.svg);
+  --start-empty-svg: url(./images/empty-node-images/dark-start.svg);
+  --target-empty-svg: url(./images/empty-node-images/dark-target.svg);
     
   /* sidebar theme variables */
   --bc-sidebar: linear-gradient(180deg, rgb(36, 36,36) 0%, rgb(14, 14, 14) 100%);
