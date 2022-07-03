@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/introjs.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Ubuntu:wght@300&display=swap"
+        rel="stylesheet">
+
+    <title>Document</title>
+    <script src="./js/lib/intro.js"></script>
+    <script src="./js/lib/DisjointSet.js"></script>
+    
+    
+    <script src="./js/util/cell.js"></script>
+    <script src="./js/util/cellUtil.js"></script>
+    <script src="./js/util/generateNodes.js"></script>
+    <script src="./js/util/nodeDragDrop.js"></script>
+    <script src="./js/util/tableUtil.js"></script>
+    <script src="./js/util/theme.js"></script>
+    <script src="./js/util/toggleHidden.js"></script>
+    <script src="./js/util/visualize.js"></script>
+    <script src="./js/util/visualizationUtil.js"></script>
+
+    <script src="./js/maze-algorithms/damask.js"></script>
+    <script src="./js/maze-algorithms/ellers.js"></script>
+    <script src="./js/maze-algorithms/herringbone.js"></script>
+    <script src="./js/maze-algorithms/kruskals.js"></script>
+    <script src="./js/maze-algorithms/longStaggeredLines-horiz.js"></script>
+    <script src="./js/maze-algorithms/longStaggeredLines-ver.js"></script>
+    <script src="./js/maze-algorithms/prims.js"></script>
+    <script src="./js/maze-algorithms/random.js"></script>
+    <script src="./js/maze-algorithms/recursiveBacktracking.js"></script>
+    <script src="./js/maze-algorithms/recursiveDivision.js"></script>
+    <script src="./js/maze-algorithms/shortStaggeredLines-horiz.js"></script>
+    <script src="./js/maze-algorithms/shortStaggeredLines-ver.js"></script>
+
+    <script src="./js/pathfinding-algorithms/astar.js"></script>
+    <script src="./js/pathfinding-algorithms/breadthFirstSearch.js"></script>
+    <script src="./js/pathfinding-algorithms/depthFirstSearch.js"></script>
+    <script src="./js/pathfinding-algorithms/dijkstras.js"></script>
+    <script src="./js/pathfinding-algorithms/greedyBestFirstSearch.js"></script>
+
+
+     
+</head>
+<body class="light">
+    <div class="container">
+        <!--Topbar -->
+        <div class="topbar">
+            <!-- Legend -->
+            <div class="legend-container">
+                <!-- Start Node Element-->
+                <div id="start-element" class="legend-element">
+                    <div id="start-node" class="node-box" draggable="true">
+                        <large data-hint="Drag and drop the start node to any location within the board prior to visualizing!"></large>
+                        <svg id="start-svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 90.000000 89.000000">
+                        
+                            <g transform="translate(0.000000,89.000000) scale(0.100000,-0.100000)" stroke="none">
+                                <path d="M390 821 c-86 -28 -141 -74 -181 -151 -34 -65 -32 -171 4 -258 45
+                        -108 199 -343 233 -356 24 -9 40 3 92 73 69 93 138 208 169 283 38 90 38 193
+                        1 263 -31 60 -67 95 -128 125 -48 24 -147 35 -190 21z m157 -216 c74 -56 89
+                        -83 53 -92 -16 -4 -20 -15 -22 -62 l-3 -56 -35 0 -35 0 -3 58 -3 57 -39 0 -39
+                        0 -3 -57 -3 -58 -35 0 -35 0 -3 56 c-2 47 -6 58 -22 62 -11 3 -20 12 -20 21 0
+                        17 137 126 159 126 8 0 47 -25 88 -55z" />
+                            </g>
+                        </svg>          
+                    </div>
+                </div>
+                    
+                <!-- Target Node Element -->
+                <div id="target-element" class="legend-element">
+                    <div id="target-node" class="node-box" draggable="true">
+                        <large data-hint="Drag and drop the target node to any location within the board prior to visualizing!"></large>
+                
+                        <svg id="target-svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 96.000000 96.000000">
+                        
+                            <g transform="translate(0.000000,96.000000) scale(0.100000,-0.100000)" stroke="none">
+                                <path d="M400 931 c-90 -29 -165 -96 -203 -180 -27 -59 -28 -172 -3 -256 39
+                        -130 154 -334 250 -440 l36 -40 36 40 c90 100 208 307 246 430 29 94 30 203 1
+                        266 -50 111 -150 180 -268 185 -38 2 -81 0 -95 -5z m163 -241 c39 -44 38 -107
+                        -2 -152 -26 -29 -35 -33 -81 -33 -46 0 -55 4 -81 33 -31 35 -39 94 -18 133 34
+                        64 132 75 182 19z" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Unvisited Nodes -->
+                <div class="legend-element">
+                    <div id="unvisited" class="node-box"></div>
+                </div>
+
+                <!-- Visited Nodes-->
+                <div class="legend-element">
+                    <div id="visited1" class="node-box"></div>
+                </div>
+
+                <div class="legend-element">
+                    <div id="visited2" class="node-box"></div>
+                </div>
+            
+                <div class="legend-element">
+                    <div id="legend-wall" class="node-box"></div>
+                </div>
+
+                <div class="legend-element">
+                    <div id="legend-path" class="node-box"></div>
+                </div>
+            </div>
+
+            <!-- Legend label text -->
+            <div class="legend-text-container">
+                <div class="legend-text-box">start</div>
+
+                <div class="legend-text-box">target</div>
+
+                <div class="legend-text-box">unvisited</div>
+
+                <div class="legend-text-box">visited</div>
+
+                <div class="legend-text-box">visited</div>
+
+                <div class="legend-text-box">wall</div>
+    
+                <div class="legend-text-box">path</div>
+            </div>
+        </div>
+
+        <!--Sidebar -->
+        <div class="sidebar">
+            
+            <!-- LOGO-->
+            <div class="logo">
+                <span class="logo-text">pathfinding <br> visualizer </span>
+                <svg class ="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <!--! Font Awesome Pro 6.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        d="M320 256C302.3 256 288 270.3 288 288C288 305.7 302.3 320 320 320H416C469 320 512 362.1 512 416C512 469 469 512 416 512H139.6C148.3 502.1 158.9 489.4 169.6 475.2C175.9 466.8 182.4 457.6 188.6 448H416C433.7 448 448 433.7 448 416C448 398.3 433.7 384 416 384H320C266.1 384 223.1 341 223.1 288C223.1 234.1 266.1 192 320 192H362.1C340.2 161.5 320 125.4 320 96C320 42.98 362.1 0 416 0C469 0 512 42.98 512 96C512 160 416 256 416 256H320zM416 128C433.7 128 448 113.7 448 96C448 78.33 433.7 64 416 64C398.3 64 384 78.33 384 96C384 113.7 398.3 128 416 128zM118.3 487.8C118.1 488 117.9 488.2 117.7 488.4C113.4 493.4 109.5 497.7 106.3 501.2C105.9 501.6 105.5 502 105.2 502.4C99.5 508.5 96 512 96 512C96 512 0 416 0 352C0 298.1 42.98 255.1 96 255.1C149 255.1 192 298.1 192 352C192 381.4 171.8 417.5 149.9 448C138.1 463.2 127.7 476.9 118.3 487.8L118.3 487.8zM95.1 384C113.7 384 127.1 369.7 127.1 352C127.1 334.3 113.7 320 95.1 320C78.33 320 63.1 334.3 63.1 352C63.1 369.7 78.33 384 95.1 384z" />
+                </svg>
+            </div>
+                
+            <ul class="navbar">
+
+            <!-- Patterns Button-->
+                <li class="nav-item">
+                    <button class="nav-button" id="patterns-btn">
+                        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path class="svg-path"
+                                d="M10 10h4v4h-4zm0 6h4v4h-4zM4 4h4v4H4zm0 6h4v4H4zm0 6h4v4H4zM16 4h4v4h-4zm0 6h4v4h-4zm0 6h4v4h-4zM10 4h4v4h-4z"
+                                opacity=".3" />
+                            <path
+                                d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 20H4v-4h4v4zm0-6H4v-4h4v4zm0-6H4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4z" />
+                        </svg>
+                        <span class="button-text">Patterns</span>
+                        <svg class="arrow-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px"
+                            fill="">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M7 10l5 5 5-5H7z" />
+                        </svg>
+                    </button>
+                    
+                    <div class="hidden">
+                        <div class="hidden-header">
+                            <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path class="svg-path"
+                                    d="M10 10h4v4h-4zm0 6h4v4h-4zM4 4h4v4H4zm0 6h4v4H4zm0 6h4v4H4zM16 4h4v4h-4zm0 6h4v4h-4zm0 6h4v4h-4zM10 4h4v4h-4z"
+                                    opacity=".3" />
+                                <path
+                                    d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 20H4v-4h4v4zm0-6H4v-4h4v4zm0-6H4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4z" />
+                            </svg>
+                            <span class="button-text">Patterns</span>
+                            <svg class="hidden-arrow-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M7 10l5 5 5-5H7z" />
+                            </svg> 
+                            <br>
+                        </div>
+                    
+                        <div>
+                            <br>
+                            <input type="radio" name="pattern" value="rd" id="rd">
+                            <label for="rd">Recursive Division</label>
+                            <br>
+                        </div>
+                            
+                        <div>
+                            <input type="radio" name="pattern" value="rbt" id="rbt">
+                            <label for="rbt">Recursive Backtracking</label>
+                            <br>
+                        </div>
+                    
+                        <div>
+                            <input type="radio" name="pattern" value="prims" id="prims">
+                            <label for="prims">Prim's Algorithm</label>
+                            <br>
+                        </div>
+                    
+                        <div>
+                            <input type="radio" name="pattern" value="kruskals" id="kruskals">
+                            <label for="kruskals">Kruskal's Algorithm</label>
+                            <br>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="pattern" value="ellers" id="ellers">
+                            <label for="ellers">Eller's Algorithm</label>
+                            <br>
+                        </div>
+                    
+                        <div>
+                            <input type="radio" name="pattern" value="random" id="random">
+                            <label for="random">Random Generation</label>
+                            <br>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="pattern" value="sslh" id="sslh">
+                            <label for="sslh">Short Stagger Lines (Horizontal)</label>
+                            <br>
+                        </div>
+                    
+                        <div>
+                            <input type="radio" name="pattern" value="sslv" id="sslv">
+                            <label for="sslv">Short Stagger Lines (Vertical)</label>
+                            <br>
+                        </div>
+                    
+                        <div>
+                            <input type="radio" name="pattern" value="lslh" id="lslh">
+                            <label for="lslh">Long Stagger Lines (Horizontal)</label>
+                            <br>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="pattern" value="lslv" id="lslv">
+                            <label for="lslv">Long Stagger Lines (Vertical)</label>
+                            <br>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="pattern" value="damask" id="damask">
+                            <label for="damask">Pixel Damask</label>
+                            <br>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="pattern" value="herringbone" id="herringbone">
+                            <label for="herringbone">Herringbone</label>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Algorithms Button-->
+                <li class="nav-item">
+                    <button class="nav-button" id="algorithm-btn">
+                        <svg class="nav-svg" id="alg-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#989898">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+                        </svg>
+                        <span class="button-text">
+                            <large data-hint="Choose an algorithm!"></large>Algorithms
+                        </span>
+                        <svg class ="arrow-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M7 10l5 5 5-5H7z" />
+                        </svg>
+                    </button>
+
+                    <div class="hidden" id="algorithm-hidden">
+                        <div class="hidden-header">
+                            <svg class="nav-svg" id="alg-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px"
+                                fill="#989898">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+                            </svg>
+                            <span class="button-text">Algorithms</span>
+                            <svg class="hidden-arrow-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M7 10l5 5 5-5H7z" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <br>
+                            <input type="radio" name="algorithm" value="bfs" id="bfs">
+                            <label for="bfs">Breadth First<br>Search</label>
+                            <br>
+                        </div>
+            
+                        <div>
+                            <input type="radio" name="algorithm" value="dfs" id="dfs">
+                            <label for="dfs">Depth First<br>Search</label>
+                            <br>
+                        </div>
+                        
+                        <div>
+                            <input type="radio" name="algorithm" value="dijkstras" id="dijkstras">
+                            <label for="dijkstras">Dijkstra's<br>Algorithm</label>
+                            <br>
+                        </div>
+                        
+                        <div>
+                            <input type="radio" name="algorithm" value="astar" id="astar">
+                            <label for="astar">A* Algorithm</label>
+                            <br>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="algorithm" value="greedy" id="greedy">
+                            <label for="greedy">Greedy Best <br> First Search</label>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Speed Button -->
+                <li class="nav-item" id="speed-nav-item">
+                    <div class="speed-container">
+                        <div class="speed-icon-container">
+                            <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px">
+                                <path d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44z" />
+                                <path class="svg-path" d="M10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z" />
+                            </svg>
+                            <span class="button-text">Speed</span> 
+                        </div> 
+                        <input id="speed" type="range" min="1" max="7" step="1" value="4">
+                        <div class="speed-label-container">
+                            <p>slower</p>
+                            <p>avg</p>
+                            <p>faster</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <button id="clearwalls" class="nav-button" onclick="">
+                        <span class="button-text">Clear Walls</span>
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <button id="clearpath" class="nav-button" onclick="">
+                        <span class="button-text">Clear Path</span>
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <button id="clearboard" class="nav-button">
+                        <span class="button-text">Clear Board</span>
+                    </button>
+                </li>
+                    
+                <!-- Theme Button -->
+                <li class="nav-item">
+                    <button id="theme-btn" class="nav-button">
+                        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px"
+                            fill="#000000">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path class="svg-path" d="M6 4h10v2H6z" opacity=".3" />
+                            <path
+                                d="M17 2H5c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6h1v4H9v11c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-9h8V4h-3V3c0-.55-.45-1-1-1zm-1 4H6V4h10v2z" />
+                        </svg>
+                        <span class="button-text">Theme</span>
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Visualize Button -->
+            <li class="nav-item">
+                <button id="visualize" class="nav-button">
+                    <svg class="nav-svg" id="visualize-svg" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24"
+                        width="48px" fill="#000000">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path class="svg-path" d="M10 8.64v6.72L15.27 12z" opacity=".3" />
+                            <path d="M8 19l11-7L8 5v14zm2-10.36L15.27 12 10 15.36V8.64z" />
+                    </svg>
+                    <span class="button-text" id="visualize-text">Visualize</span>
+                </button>
+            </li>
+        </div>
+
+        <!-- Main section containing the GRID (aka "maze", "map") -->
+        <div id="main" class="main">
+            <table id="table">
+                <script src="./js/util/buildTable.js"></script>
+                <script src="./js/util/wallToggle.js"></script>
+            </table>
+        </div>
+    </div>
+
+    <script src="./js/util/init.js"></script>
+
+    <script>
+        introJs().addHints();
+        introJs().hideHints();
+        introJs().setOptions({
+            disableInteraction: true,
+            dontShowAgain: true,
+            showBullets: true,
+            hidePrev: true,
+                steps: [{
+                    //step 1
+                    title: 'Hi there!',
+                    intro: 'Welcome to Pathfinding Visualizer. Here\'s a quick demo! <br><br> You can skip this tutorial at any time by clicking the button in the top right corner.'
+                },
+                {
+                    //step 2
+                    intro: 'This app displays visualizations of various pathfinding algorithms in real time. <br><br> Pathfinding algorithms generate valid paths between points. Some are mathematically proven to always produce the shortest path.'
+                },
+                {
+                    //step 3
+                    title: 'Choosing an algorithm',
+                    element: document.getElementById("algorithm-btn"),
+                    intro: 'You can choose an algorithm to visualize here.',
+                    position: 'right'
+                },
+                {
+                    //step 4
+                    title: 'Choosing an algorithm',
+                    element: document.getElementById("algorithm-btn"),
+                    intro: 'Some algorithms are weighted while others are not. <br><br> In this app, weighted algorithms associate a cost of 1 for moving from one cell to another. An additional cost of 1 is factored in for turning.',
+                    position: 'right'
+                },
+                {
+                    //step 5
+                    title: 'Adding Walls',
+                    element: document.getElementById("table"),
+                    intro: '<img src="/images/tutorial/tutorial-step-5.gif" object-fit="contain" width="100%" height="100%"/> Clicking on cells within the board toggles an impassable wall at that location. <br><br> Hold down any mouse button while moving the mouse to add or remove walls more easily.',
+                },
+                {
+                    //step 6
+                    title: 'Adding Walls',
+                    element: document.getElementById("patterns-btn"),
+                    intro: 'Alternatively, you can choose from 12 different algorithms to build walls for you. <br><br> Some options generate traditional mazes, while others create simple, yet interesting, patterns.',
+                    position: 'right'
+                },
+                {
+                    //step 7
+                    title: 'Adding Start and Target',
+                    element: document.getElementById('start-element'),
+                    intro: '<img src="/images/tutorial/tutorial-step-7.gif" object-fit="contain" width="100%" height="100%"/><br><br>Click and drag the start node into any cell within in the table to label your start position. You can reposition it by dragging it to a new location.'
+                },
+                {
+                    //step 8
+                    title: 'Adding Start and Target',
+                    element: document.getElementById('target-element'),
+                    intro: '<img src="/images/tutorial/tutorial-step-7.gif" object-fit="contain" width="100%" height="100%"/><br><br>The same functionality applies to the target node as well! <br><br> <b>Note that you should position start and target after selecting a pattern.</b>'
+                },
+                {
+                    //step 9
+                    title: "More Options",
+                    element: document.querySelector('.sidebar'),
+                    intro: "The sidebar also allows you to change the app's appearance by choosing a theme, change the visualization speed, and clear various elements from the board."
+                },
+                {
+                    //step 10
+                    title: 'Visualize!',
+                    element: document.getElementById('visualize'),
+                    intro: 'Once you are ready, click the visualize button to see pathfinding in action.'
+                }]
+            }).start();
+    </script>
+</body>
+</html>
