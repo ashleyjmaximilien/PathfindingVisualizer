@@ -13,10 +13,10 @@ if (isEven(numRows))
 if (isEven(numCols))
     numCols--;
 
-if (numRows <= 0)
+if (numRows <= 8)
     numRows = 9;
 
-if (numCols <= 0)
+if (numCols <= 8)
     numCols = 9;
 
 
