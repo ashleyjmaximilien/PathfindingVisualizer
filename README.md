@@ -27,7 +27,7 @@ You can access this project at https://ashleyjmaximilien.github.io/PathfindingVi
   
   [Breadth First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#breadth-first-searchunweighted)
   
-  [Depth First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#depth-first-searchunweighted)
+  [Depth First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#depth-first-search-unweighted)
   
   [Dijkstra's Algorithm](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#dijkstras-algorithmweighted)
   
