@@ -27,13 +27,13 @@ You can access this project at https://ashleyjmaximilien.github.io/PathfindingVi
   
   [Breadth First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#breadth-first-searchunweighted)
   
-  [Depth First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#depth-first-search-unweighted)
+  [Depth First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#depth-first-searchunweighted)
   
   [Dijkstra's Algorithm](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#dijkstras-algorithmweighted)
   
   [Greedy Best First Search](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#greedy-best-first-searchweighted)
   
-  [A* Algorithm](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#a-algorithmweighted)
+  [A* Algorithm](https://github.com/ashleyjmaximilien/PathfindingVisualizer/#a-algorithm-weighted)
     
   
 <h1>Maze Generation Algorithms</h1>
@@ -213,7 +213,7 @@ Each 90° turn has a cost of 1
 In an unweighted graph, Breadth First Search (BFS) is guaranteed to produce the most optimal path between two nodes. Traditionally, BFS uses a queue to store newly discovered nodes with an amortized time complexity of <b>Θ(1)</b> for enqueue and dequeue operations. In theory, the implementation of BFS in this project trades efficiency for convenience by using the built in Javascript array. The dequeue operation of a queue is mimicked by using ```array.shift()``` and its time complexity is dependent of this operation's implementation in the Javascript engine in use. ~~It can't be worse than <b>O(n)</b>, right? ...Right?!~~ <br>
 <br>
 
-### <b>Depth First Search </b> ```unweighted```
+### <b>Depth First Search</b> ```unweighted```
 
 Unlike BFS, Depth First Search (DFS) is not guaranteed to produce the most optimal path between nodes. As in the BFS implementation, this project's implementation of DFS also theorectically trades efficiency for convenience by using a Javascript array rather than a stack. A stack usually supports a push operation with a time complexity of O(1). ```array.unshift()``` is used in this project to push elements to the top of an array. For the same reasons as described above, the time complexity of this operation is uncertain but it is reasonable to assume that it is O(n) if not better.    
 <br>
